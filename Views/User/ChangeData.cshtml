@@ -1,0 +1,77 @@
+﻿@model Kuchenne_rewolucje.Dtos.UserDto
+@{
+    ViewData["Title"] = "Dane użytkownika";
+    Layout = "_UserLayout";
+}
+
+@if (TempData.ContainsKey("SuccessMessage"))
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+else if (TempData.ContainsKey("ErrorMessage"))
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="center-container">
+    <h1 class="profile-header">Ustawienia konta</h1>
+    <div class="user-data">
+        <div class="user-info">
+            <div class="profile-image">
+                @if (Model.ImageUrl != null && Model.ImageUrl.Length > 0)
+                {
+                    <img src="data:image;base64,@Convert.ToBase64String(Model.ImageUrl)" class="user-image" />
+                }
+                else
+                {
+                    <img src="/img/default-profile-img.jpg" class="user-image" />
+                }
+                <form id="change-image-form" asp-action="ChangeImage" asp-controller="User" method="post" enctype="multipart/form-data" hidden>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Id" value="@Model.Id" hidden />
+                    <div class="form-group">
+                        <input type="file" class="form-control" asp-for="ImageFile" name="ImageFile" required/>
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="btn-group">
+                            <button id="go-back" type="button" class="btn btn-dark" style="margin-right: 10px;">Wstecz</button>
+                            <button type="submit" class="btn btn-primary">Zapisz</button>
+                        </div>
+                    </div>
+                </form>
+                <button id="change-image-button" class="btn btn-primary">Zmień zdjęcie</button>
+            </div>
+            <div class="user-stats">
+                <p>Liczba przepisów: @ViewBag.NumberOfArticle</p>
+                <p>Liczba komentarzy: @ViewBag.NumberOfComments</p>
+                <p>Liczba ocen: @ViewBag.NumberOfRatings</p>
+            </div>
+        </div>
+        <div class="user-data-forms">
+            <form asp-action="ChangeUsername" asp-controller="User" method="post" class="my-form" style="margin-left: 0;">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="Id" value="@Model.Id" hidden/>
+                <div class="form-group">
+                    <label asp-for="Username" class="control-label"></label>
+                    <input id="username" class="form-control" asp-for="Username" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Zmień nazwę</button>
+                </div>
+            </form>
+            @await Html.PartialAsync("_ChangePasswordForm", new Kuchenne_rewolucje.Dtos.UserRegisterRequestDto {Id = Model.Id})
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/user.js" asp-append-version="true"></script>
+}

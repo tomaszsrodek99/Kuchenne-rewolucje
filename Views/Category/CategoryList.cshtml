@@ -1,0 +1,66 @@
+﻿@model List<Kuchenne_rewolucje.Dtos.CategoryWithDetailsView>
+
+@{
+    ViewData["Title"] = "Kategorie";
+    Layout = "_UserLayout";
+}
+
+@await Html.PartialAsync("_Alerts")
+
+<div class="container-fluid">
+    <div id="category-list-table" style="display: flex;" class="flex-column align-items-center">
+        <button type="button" id="add-category-button" class="btn btn-info" style="background-color: #17a2b8; max-width: 175px; margin-bottom: 10px;">Dodaj nową kategorię</button>
+        @if (Model.Any())
+        {
+            <div table-responsive>
+                <table id="category-list" class="display table table-striped table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th hidden></th>
+                            <th>Nazwa kategorii</th>
+                            <th>Liczba przepisów w kategorii</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td hidden>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td class="selectable-td">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="selectable-td">
+                                    @Html.DisplayFor(modelItem => item.NumberOfRecipes)
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="btn-group">
+                                            <a href="@Url.Action("UpdateCategoryView", "Category", new { id = item.Id })" class="my-btn rounded-dark-button btn-primary" style="margin-right: 5px;">Edytuj</a>
+                                            <a href="@Url.Action("DeleteCategory", "Category", new { id = item.Id })" class="my-btn rounded-dark-button btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć kategorię?')">Usuń</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p>Brak zapisanych kategorii w bazie danych.</p>
+        }
+    </div>
+    <div class="category-partial-view">
+        @await Html.PartialAsync("_CreateCategory", new Kuchenne_rewolucje.Dtos.CategoryDto())
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/category.js"></script>
+}

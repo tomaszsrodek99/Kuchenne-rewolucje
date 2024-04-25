@@ -1,0 +1,23 @@
+﻿@using Kuchenne_rewolucje.Repositories;
+@using Kuchenne_rewolucje.Context;
+@using AutoMapper;
+
+@inject MyDbContext _context
+@inject IMapper _mapper
+
+@{
+    var categoryRepository = new CategoryRepository(_context, _mapper);
+    var categories = await categoryRepository.GetAllAsync();
+    categories = categories.OrderBy(c => c.Name).ToList();
+}
+
+<div class="category-menu">
+    <ul class="category-list">
+        @foreach (var category in categories)
+        {
+            <li class="category-element">
+                <a href="/Article/Index?categoryid=@category.Id" data-categoryid="@category.Id" class="nav-link no-link-style">@category.Name</a>
+            </li>
+        }
+    </ul>
+</div>

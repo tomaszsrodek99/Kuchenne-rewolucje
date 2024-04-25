@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Kuchenne_rewolucje.Dtos.UserDto>
+@{
+    ViewData["Title"] = "Logowanie";
+    Layout = "_Layout";
+}
+
+<div class="center-container" id="list-profiles">
+    <h1 class="profile-header">Kto gotuje?</h1>
+    <div class="list-profiles">
+        @foreach (var profile in Model)
+        {
+            <div class="user-card">
+                <a class="no-list-style" data-username="@profile.Username">
+                    @if (profile.ImageUrl != null && profile.ImageUrl.Length > 0)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(profile.ImageUrl)" class="user-image" />
+                    } else {
+                    <img src="/img/default-profile-img.jpg" class="user-image img-fluid" />
+                    }
+                </a>
+                <div>@profile.Username</div>
+            </div>
+        }
+    </div>
+</div>
+
+@await Html.PartialAsync("Login", new Kuchenne_rewolucje.Dtos.UserLoginRequest());
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/quest.js"></script>
+}

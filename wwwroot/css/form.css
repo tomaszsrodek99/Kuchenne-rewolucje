@@ -1,0 +1,169 @@
+﻿.urlLink {
+    margin-left: 50%;
+    margin-bottom: 5px;
+}
+
+.search-bar {
+    border-radius: 7px;
+}
+
+.search-input {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    width: 20%;
+}
+
+    .btn-back {
+        margin-right: 15px;
+    }
+
+    .my-form {
+        padding: 10px 20px;
+        background-color: #f8f9fa;
+        border: 3px solid #ced4da;
+        border-radius: 5px;
+        margin: 10px;
+        overflow-y: auto;
+        color: black;
+    }
+
+    .comments-container {
+        background: white;
+        border: 3px solid #ced4da;
+        margin: auto;
+        color: black;
+        padding: 10px;
+        text-align: left;
+        width: 50%;
+    }
+
+    .comment {
+        border: 2px solid #00A4BD;
+        padding: 5px;
+        box-shadow: 6px 4px #00A4BD;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .comment-data {
+        color: gray;
+        margin: 0px;
+    }
+
+    .comment-content {
+        text-align: left;
+    }
+
+    .form-button {
+        margin-right: 15px;
+    }
+
+    .wide-form {
+        max-width: 100%;
+    }
+
+    .form-control:focus {
+        border-color: #ced4da;
+        box-shadow: 5px 5px 30px rgba(0,0,0,0.2);
+    }
+
+    .form-floating:focus-within {
+        z-index: 2;
+    }
+
+    .my-form .form-group {
+        margin-bottom: 15px;
+    }
+
+    .my-form label {
+        font-weight: bold;
+    }
+
+    .my-form input[type="number"] {
+        min-width: 100px;
+        max-width: 150px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        margin: auto;
+    }
+
+    .my-form input[type="text"],
+    .my-form select {
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+    }
+
+    .my-form button[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-weight: bold;
+        text-align: center;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+    }
+
+        .my-form button[type="submit"]:hover {
+            background-color: #0069d9;
+        }
+
+    .rating-partial-view {
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        margin-top: 10px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 10px;
+    }
+
+    .my-form-check {
+        padding-left: 0;
+        padding-top: 5px;
+    }
+
+    .form-container {
+        padding: 10px;
+    }
+
+    .display-none {
+        visibility: hidden;
+    }
+
+    .form-flex {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #add-category-button {
+        margin-top: 10px;
+    }
+
+    .rounded-dark-button {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    my-btn:hover {
+        box-shadow: 0px 4px 8px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #3c4fe0;
+        transform: translateY(-2px);
+    }
+
+    my-btn:active {
+        box-shadow: inset 0px 3px 7px #3c4fe0;
+        transform: translateY(2px);
+    }
+   

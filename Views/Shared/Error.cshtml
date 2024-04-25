@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Błąd";
+    Layout = "_Layout";
+}
+
+<h1 class="text-danger">Napotkano błąd. @ViewBag.ErrorMessage</h1>
+<div class="text-center">
+    <a asp-action="LoginView" asp-controller="User" class="btn btn-primary">
+        Przejdź do strony głównej
+    </a>
+</div>
+

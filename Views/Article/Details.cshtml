@@ -1,0 +1,108 @@
+﻿@model Kuchenne_rewolucje.Dtos.ArticleDto
+
+@{
+    ViewData["Title"] = Model.Name;
+    string username = Model.User.Username;
+    var id = Context.Request.Cookies["UserId"];
+    double rate = ViewBag.Rate;
+    Layout = "_UserLayout";
+}
+
+@await Html.PartialAsync("_Alerts")
+
+<div id="standard-detail-container" class="container-fluid">
+    <div class="blur-overlay" id="blurOverlay"></div>
+    <button id="go-back" type="button" class="btn rounded-dark-button my-btn float-start" onclick="goBack()" style="float: left; margin-right: 5px;">Wstecz</button>
+    <button id="create-rating-button" type="button" class="btn rounded-dark-button my-btn float-start" style="float: left;">Oceń</button>
+    <div class="row margin-bottom">
+        <div class="col-12">
+            <h1 class="detail-title">@Model.Name <i class="fa-solid fa-star active"> @Model.Rating / 5</i></h6> </h1>
+            <img src="data:image;base64,@Convert.ToBase64String(Model.ImageUrl)" class="detail-image img-fluid">
+        </div>
+    </div>
+    <div class="row" style="color: black;">
+        <div class="offset-2 col-3" style="text-align: left;">
+            @Html.Raw(Model.Ingredients)
+        </div>
+        <div class="col-5">
+            <div style="text-align: left;">
+                @Html.Raw(Model.Content)
+            </div>
+            <h3 class="text-center">Komentarze</h3>
+            <div class="comments-container">
+                @foreach (var comment in Model.Comments)
+                {
+                    <div class="comment">
+                        <div>
+                            <p class="comment-data">@comment.Username - @comment.CreatedAt</p>
+                            <p class="comment-content">@comment.Content</p>
+                        </div>
+                        @if (comment.UserId == int.Parse(id))
+                        {
+                            <a href="@Url.Action("DeleteComment", "/Comment", new { id = comment.Id })" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten komentarz?')">Usuń</a>
+                        }
+                    </div>
+                }
+                @await Html.PartialAsync("_CreateComment", new Kuchenne_rewolucje.Dtos.CommentDto { ArticleId = Model.Id, UserId = Model.UserId, Username = username })
+                <div id="rating-partial-view" class="rating-partial-view hidden text-center">
+                    @await Html.PartialAsync("_CreateRating", new Kuchenne_rewolucje.Models.Rating { ArticleId = Model.Id, UserId = Model.UserId, Value = rate })
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+        </div>
+    </div>
+</div>
+<div id="rating-partial-view" class="rating-partial-view hidden text-center">
+    @await Html.PartialAsync("_CreateRating", new Kuchenne_rewolucje.Models.Rating { ArticleId = Model.Id, UserId = Model.UserId, Value = rate })
+</div>
+<div id="mobile-container" class="container-fluid">
+    <div class="blur-overlay" id="blurOverlay"></div>
+    <h1 class="detail-title">@Model.Name <i class="fa-solid fa-star active"> @Model.Rating / 5</i></h1>
+    <div class="btn-group" style="display: flex;">
+        <button id="go-back" type="button" class="btn rounded-dark-button my-btn" onclick="goBack()" style="border: 2px solid white;">Wstecz</button>
+        <button id="create-rating-button" type="button" class="btn rounded-dark-button my-btn" style="border: 2px solid white;">Oceń</button>
+    </div>
+    <img src="data:image;base64,@Convert.ToBase64String(Model.ImageUrl)" class="card-img-top img-fluid">
+    <div style="text-align: justify;">
+        @Html.Raw(Model.Ingredients)
+    </div>
+    <div style="text-align: justify;">
+        @Html.Raw(Model.Content)
+    </div>
+    <h3 class="text-center">Komentarze</h3>
+    <div class="comments-container">
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="comment">
+                <div>
+                    <p class="comment-data">@comment.Username - @comment.CreatedAt</p>
+                    <p class="comment-content">@comment.Content</p>
+                </div>
+                @if (comment.UserId == int.Parse(id))
+                {
+                    <a href="@Url.Action("DeleteComment", "/Comment", new { id = comment.Id })" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten komentarz?')">Usuń</a>
+                }
+            </div>
+        }
+        @await Html.PartialAsync("_CreateComment", new Kuchenne_rewolucje.Dtos.CommentDto { ArticleId = Model.Id, UserId = Model.UserId, Username = username })
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/article.js"></script>
+    <script src="~/js/star-rating.js"></script>
+    <script>
+        var userRate = @ViewBag.Rate;
+        $(document).ready(function () {
+            var rate = userRate;
+            $('#star-rating').starRating({
+                initialRating: rate,
+                callback: function (currentRating, $el) {
+                    $('#rating-value').text(currentRating);
+                    $('#rating-input').val(currentRating);
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,73 @@
+﻿@model List<Kuchenne_rewolucje.Dtos.CategoryDto>
+
+@{
+    ViewData["Title"] = "Moje przepisy";
+    Layout = "_UserLayout";
+}
+
+@await Html.PartialAsync("_Alerts")
+
+<h1 class="margin-bottom">Moje przepisy</h1>
+<div class="container-fluid">
+    @if (Model.Any())
+    {
+        <div class="row">
+            <div class="col-lg-3 recipes-list">
+                @foreach (var category in Model)
+                {
+                    <div class="sticky-top">
+                        <h4>@category.Name</h4>
+                        <ul class="list-unstyled">
+                            @foreach (var article in category.Articles)
+                            {
+                                <li>
+                                    <a href="/Article/SingleArticle?id=@article.Id" class="no-link-style">@((category.Articles.IndexOf(article) + 1).ToString()). @article.Name</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+            <div class="col-md-9 col-lg-9 col-sm-12">
+                <div class="row">
+                    @foreach (var category in Model)
+                    {
+                        @foreach (var article in category.Articles)
+                        {
+                            <div class="offset-sm-2 col-sm-8 col-md-4 col-lg-3 box-shadow" data-categoryid="@article.CategoryId">
+                                <div class="flex-buttons">
+                                    <a href="@Url.Action("UpdateArticleView", "Article", new { id = article.Id })" class="btn rounded-dark-button my-btn">Edytuj</a>
+                                    <a href="@Url.Action("DeleteArticle", "/Article", new { id = article.Id })" class="btn rounded-dark-button btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten przepis?')">Usuń</a>
+                                </div>
+                                <a href="/Article/SingleArticle?id=@article.Id"
+                                   class="nav-link no-link-style no-padding d-flex flex-column justify-content-center" style="width: 100%; display: block; height: 100%;">
+                                    <img class="card-img-top" src="data:image;base64,@Convert.ToBase64String(article.ImageUrl)">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@article.Name</h5>
+                                    </div>
+                                </a>
+                                <h6 class="rating-body"><i class="fa-solid fa-star active"></i> @article.Rating / 5</h6>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+    else
+    {
+        <p style="float: left">Brak przepisów.</p>
+    }
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/article.js"></script>
+    <script>
+        var data = @Json.Serialize(Model);
+    </script>
+}
