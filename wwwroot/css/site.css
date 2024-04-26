@@ -174,11 +174,42 @@ a {
             padding-right: 5px;
         }
 
+@media (min-width: 767px) and (max-width: 927px) {
+    .rating-body {
+        top: -20px;
+    }
+}
+
     .rating-body {
         position: relative;
-        top: -20px;
+        top: -30px;
         font-weight: bold;
     }
+
+    .igredients-container {
+        /* Ustaw maksymaln¹ szerokoœæ kontenera */
+        max-width: 100%;
+        /* Ustaw wysokoœæ na auto, aby zachowaæ proporcje obrazu */
+        height: auto;
+        /* Ustaw dodatkowy stylizowany wygl¹d obrazu */
+        overflow: hidden;
+    }
+
+        .igredients-container figure {
+            /* Ustaw maksymaln¹ szerokoœæ i wysokoœæ obrazu */
+            max-width: 100%;
+            max-height: 100%;
+            /* Zapobiegnij wykraczaniu obrazu poza kontener */
+            overflow: hidden;
+        }
+
+            .igredients-container figure img {
+                /* Ustaw obraz na pe³n¹ szerokoœæ i wysokoœæ kontenera */
+                width: 100%;
+                height: auto;
+                /* Wy³¹cz skalowanie obrazu */
+                object-fit: cover;
+            }
 
     #favourite-icon {
         position: absolute;
@@ -190,22 +221,25 @@ a {
         border: 3px solid;
         border-radius: 10px;
     }
-@media (max-width: 1150px) {
-    #favourite-icon {
-        padding: 3px;
-        font-size: 20px;
-    }
-}
 
-@media (max-width: 768px) {
-    #favourite-icon {
-        padding: 3px;
-        font-size: 18px;
+    @media (max-width: 1150px) {
+        #favourite-icon {
+            padding: 3px;
+            font-size: 20px;
+        }
     }
-    .col-sm-12 {
-        flex: 0 0 80%;
+
+    @media (max-width: 768px) {
+        #favourite-icon {
+            padding: 3px;
+            font-size: 18px;
+        }
+
+        .col-sm-12 {
+            flex: 0 0 80%;
+        }
     }
-}
+
     #favourite-icon:hover {
         cursor: pointer;
         color: yellow;
@@ -241,10 +275,10 @@ a {
             margin-bottom: 25px;
         }
 
-.detail-image {
-    max-width: 335px;
-    max-height: 250px;
-    object-fit: fill;
+    .detail-image {
+        max-width: 335px;
+        max-height: 250px;
+        object-fit: fill;
     }
 
     .box-shadow {
@@ -258,8 +292,10 @@ a {
         flex-direction: column;
         align-items: center;
         box-sizing: border-box;
+        max-height: 350px;
     }
 
     .no-padding {
         padding: 0;
+    }
     }

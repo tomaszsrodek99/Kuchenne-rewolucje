@@ -15,7 +15,7 @@ namespace Kuchenne_rewolucje.Helpers
 
             if (string.IsNullOrEmpty(token))
             {
-                if (context.Request.Path.StartsWithSegments("/Auth") && context.Request.Path != "/Auth/Register")
+                if (context.Request.Path.StartsWithSegments("/Auth"))
                 {
                     await _next(context);
                     return;
@@ -31,7 +31,7 @@ namespace Kuchenne_rewolucje.Helpers
                 if (IsTokenValid(token))
                 {
                     AttachUserToContext(context, token);
-                    if (context.Request.Path == "/" || context.Request.Path.StartsWithSegments("/Auth") && context.Request.Path != "/Auth/Logout")
+                    if (context.Request.Path == "/" || context.Request.Path.StartsWithSegments("/Auth") && context.Request.Path != "/Auth/Logout" && context.Request.Path != "/Auth/RegisterView" && context.Request.Path != "/Auth/Register")
                     {
                         context.Response.Redirect("/Article/Index");
                         return;

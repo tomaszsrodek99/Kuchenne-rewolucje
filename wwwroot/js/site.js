@@ -54,8 +54,7 @@ function filterByCategory(categoryId) {
 
 function AddArticleToFavourites(articleId, element) {
     $.ajax({
-        //url: 'http://localhost:7240/Article/AddFavouriteArticle?id=' + articleId,
-        url: 'http://singulaar-001-site1.ltempurl.com/Article/AddFavouriteArticle?id=' + articleId,
+        url: 'http://localhost:7240/Article/AddFavouriteArticle?id=' + articleId,
         type: "POST",
         success: function (result) {
             if (element.classList.contains('favourites')) {

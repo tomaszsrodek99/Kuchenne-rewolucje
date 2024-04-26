@@ -20,7 +20,9 @@
                 <button type="button" class="btn create-rating-button rounded-dark-button my-btn float-start" style="float: left;">Oceń</button>
             </div>
             <img src="data:image;base64,@Convert.ToBase64String(Model.ImageUrl)" class="img-fluid detail-image">
-            @Html.Raw(Model.Ingredients)
+            <div class="igredients-container">
+                @Html.Raw(Model.Ingredients)
+            </div>
         </div>
         <div class="col-lg-5 col-md-6 d-flex flex-column">
             <div style="text-align: left;">
@@ -41,9 +43,9 @@
                         }
                     </div>
                 }
-                @await Html.PartialAsync("_CreateComment", new Kuchenne_rewolucje.Dtos.CommentDto { ArticleId = Model.Id, UserId = Model.UserId, Username = username })               
+                @await Html.PartialAsync("_CreateComment", new Kuchenne_rewolucje.Dtos.CommentDto { ArticleId = Model.Id, UserId = Model.UserId, Username = username })
             </div>
-        </div>      
+        </div>
     </div>
 </div>
 
@@ -96,7 +98,7 @@
                     $('#rating-value').text(currentRating);
                     $('#rating-input').val(currentRating);
                 }
-            });         
+            });
         });
     </script>
 }

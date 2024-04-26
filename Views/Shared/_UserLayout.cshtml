@@ -55,6 +55,10 @@
                             <a href="/User/UserData?id=@id" class="nav-link no-link-style @((ViewContext.RouteData.Values["controller"] as string == "User") ? "active" : "")">Dane użytkownika</a>
                             <a href="/Article/CreateArticle?id=@id" class="nav-link no-link-style @((ViewContext.RouteData.Values["action"] as string == "CreateArticle") ? "active" : "")">Dodaj przepis</a>
                             <a href="/Category/GetAllCategoriesWithStats" class="nav-link no-link-style @((ViewContext.RouteData.Values["controller"] as string == "Category") ? "active" : "")">Zarządzaj kategoriami</a>
+                            @if (int.Parse(id) == 1)
+                            {
+                                <a href="/Auth/RegisterView" class="nav-link no-link-style" style="color: deeppink">STWÓRZ KONTO</a>
+                            }
                         </div>
                         <a class="nav-link no-link-style @((ViewContext.RouteData.Values["controller"] as string == "User" || ViewContext.RouteData.Values["action"] as string == "CreateArticle") ? "active" : "")" href="#">
                             <i class="fa-solid fa-gear"></i> Moje konto

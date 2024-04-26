@@ -93,10 +93,11 @@ namespace Kuchenne_rewolucje.Controllers
         [Authorize]
         public IActionResult RegisterView()
         {
-            return View("Register");
+            return View("Register", new UserRegisterRequestDto());
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Register(UserRegisterRequestDto request)
         {
             try
@@ -115,8 +116,10 @@ namespace Kuchenne_rewolucje.Controllers
                     PasswordSalt = passwordSalt,
                     Username = request.Username
                 });
-                TempData["SuccessMessage"] = $"Poprawna rejestracja. Proszę się zalogować.";
-                return RedirectToAction("ProfilesView");
+                //TempData["SuccessMessage"] = $"Poprawna rejestracja. Proszę się zalogować.";
+                TempData["SuccessMessage"] = $"Poprawna rejestracja.";
+                //return RedirectToAction("ProfilesView");
+                return RedirectToAction("Index", "Article");
             }
             catch (Exception ex)
             {

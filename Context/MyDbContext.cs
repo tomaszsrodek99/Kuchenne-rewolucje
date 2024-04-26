@@ -14,8 +14,7 @@ namespace Kuchenne_rewolucje.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=KuchenneRewolucje;Trusted_Connection=True;");
-            optionsBuilder.UseSqlServer("Data Source=SQL6030.site4now.net;Initial Catalog=db_aa7ab2_singulaar;User Id=db_aa7ab2_singulaar_admin;Password=Pecan1999;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=KuchenneRewolucje;Trusted_Connection=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

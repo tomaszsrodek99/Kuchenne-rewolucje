@@ -34,7 +34,7 @@
                     {
                         @foreach (var article in category.Articles)
                         {
-                            <div class="offset-sm-2 col-sm-8 col-md-4 col-lg-3 box-shadow" data-categoryid="@article.CategoryId">
+                            <div class="offset-sm-2 col-sm-8 col-md-4 col-lg-3 box-shadow" style="margin-bottom: 60px!important;" data-categoryid="@article.CategoryId">
                                 <div class="flex-buttons">
                                     <a href="@Url.Action("UpdateArticleView", "Article", new { id = article.Id })" class="btn rounded-dark-button my-btn">Edytuj</a>
                                     <a href="@Url.Action("DeleteArticle", "/Article", new { id = article.Id })" class="btn rounded-dark-button btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten przepis?')">Usuń</a>

@@ -16,8 +16,7 @@
         var name = $('#category-name').val();
         if (name.length > 0) {
             $.ajax({
-                //url: 'http://localhost:7240/Category/CategoryExists?name=' + encodeURIComponent(name),
-                url: 'http://singulaar-001-site1.ltempurl.com/Category/CategoryExists?name=' + encodeURIComponent(name),
+                url: 'http://localhost:7240/Category/CategoryExists?name=' + encodeURIComponent(name),
                 type: "POST",
                 success: function (result) {
                     if (result.success === true) {

@@ -1,0 +1,54 @@
+﻿@model Kuchenne_rewolucje.Dtos.UserRegisterRequestDto
+
+@{
+    ViewData["Title"] = "Rejestracja";
+    Layout = "_UserLayout";
+}
+
+<div class="center-container">
+    <h2 class="text-center">Zarejestruj</h2>
+    <form asp-action="Register" asp-controller="Auth" method="post" class=" my-form d-flex flex-column">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Username" class="control-label"></label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                <input type="text" asp-for="Username" class="form-control" />
+            </div>
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>     
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" asp-for="Password" class="form-control" />
+            </div>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" class="control-label"></label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" asp-for="ConfirmPassword" class="form-control" />
+            </div>
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary btn-back" onclick="cancel()">Wstecz</button>
+                <button type="submit" class="btn btn-primary" onclick="loading()">Zarejestruj</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function cancel() {
+            window.location.href = "/Article/Index";
+        }
+    </script>
+}
