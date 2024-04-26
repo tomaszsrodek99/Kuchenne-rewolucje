@@ -12,7 +12,6 @@
         <button type="button" id="add-category-button" class="btn btn-info" style="background-color: #17a2b8; max-width: 175px; margin-bottom: 10px;">Dodaj nową kategorię</button>
         @if (Model.Any())
         {
-            <div table-responsive>
                 <table id="category-list" class="display table table-striped table-bordered table-hover">
                     <thead class="thead-dark">
                         <tr>
@@ -47,7 +46,6 @@
                         }
                     </tbody>
                 </table>
-            </div>
         }
         else
         {

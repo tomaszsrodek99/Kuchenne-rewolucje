@@ -39,19 +39,14 @@ function blur() {
 }
 
 function CloseForm() {
-    var elements = document.getElementsByClassName("rating-partial-view");
-
-    for (var i = 0; i < elements.length; i++) {
-        var element = elements[i];
-        element.style.visibility = "hidden";
-    }
-
+    $('.rating-partial-view').addClass('hidden');
     $('#blurOverlay').hide();
     $('body').removeClass('blur-overlay-visible');
 }
 
-$('#create-rating-button').on('click', function () {
-    var ratingPartialView = document.getElementById("rating-partial-view");
-    ratingPartialView.style.visibility = "visible";
+$(document).on('click', '.create-rating-button', function () {
+    $('.rating-partial-view').removeClass('hidden');
     $('#blurOverlay').show();
+    $('body').addClass('blur-overlay-visible');
 });
+

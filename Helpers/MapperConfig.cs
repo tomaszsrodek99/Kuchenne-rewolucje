@@ -26,6 +26,9 @@ namespace Kuchenne_rewolucje.Helpers
             if (ratings == null || ratings.Count == 0)
             {
                 return 0;
+            } else if(ratings.Count == 1)
+            {
+                return ratings[0].Value;
             }
 
             double totalRating = 0;

@@ -9,22 +9,20 @@
 }
 
 @await Html.PartialAsync("_Alerts")
-
+<div class="blur-overlay" id="blurOverlay"></div>
+<h1 class="detail-title text-center" style="margin-bottom: 50px;">@Model.Name <i class="fa-solid fa-star active"> @Model.Rating / 5</i></h6> </h1>
 <div id="standard-detail-container" class="container-fluid">
-    <div class="blur-overlay" id="blurOverlay"></div>
-    <button id="go-back" type="button" class="btn rounded-dark-button my-btn float-start" onclick="goBack()" style="float: left; margin-right: 5px;">Wstecz</button>
-    <button id="create-rating-button" type="button" class="btn rounded-dark-button my-btn float-start" style="float: left;">Oceń</button>
-    <div class="row margin-bottom">
-        <div class="col-12">
-            <h1 class="detail-title">@Model.Name <i class="fa-solid fa-star active"> @Model.Rating / 5</i></h6> </h1>
-            <img src="data:image;base64,@Convert.ToBase64String(Model.ImageUrl)" class="detail-image img-fluid">
-        </div>
-    </div>
+
     <div class="row" style="color: black;">
-        <div class="offset-2 col-3" style="text-align: left;">
+        <div class="offset-lg-2 offset-md-1 col-lg-3 col-md-4 d-flex flex-column" style="text-align: left;">
+            <div class="form-group">
+                <button id="go-back" type="button" class="btn rounded-dark-button my-btn float-start" onclick="goBack()" style="float: left; margin-right: 5px;">Wstecz</button>
+                <button type="button" class="btn create-rating-button rounded-dark-button my-btn float-start" style="float: left;">Oceń</button>
+            </div>
+            <img src="data:image;base64,@Convert.ToBase64String(Model.ImageUrl)" class="img-fluid detail-image">
             @Html.Raw(Model.Ingredients)
         </div>
-        <div class="col-5">
+        <div class="col-lg-5 col-md-6 d-flex flex-column">
             <div style="text-align: left;">
                 @Html.Raw(Model.Content)
             </div>
@@ -43,25 +41,17 @@
                         }
                     </div>
                 }
-                @await Html.PartialAsync("_CreateComment", new Kuchenne_rewolucje.Dtos.CommentDto { ArticleId = Model.Id, UserId = Model.UserId, Username = username })
-                <div id="rating-partial-view" class="rating-partial-view hidden text-center">
-                    @await Html.PartialAsync("_CreateRating", new Kuchenne_rewolucje.Models.Rating { ArticleId = Model.Id, UserId = Model.UserId, Value = rate })
-                </div>
+                @await Html.PartialAsync("_CreateComment", new Kuchenne_rewolucje.Dtos.CommentDto { ArticleId = Model.Id, UserId = Model.UserId, Username = username })               
             </div>
-        </div>
-        <div class="col-2">
-        </div>
+        </div>      
     </div>
 </div>
-<div id="rating-partial-view" class="rating-partial-view hidden text-center">
-    @await Html.PartialAsync("_CreateRating", new Kuchenne_rewolucje.Models.Rating { ArticleId = Model.Id, UserId = Model.UserId, Value = rate })
-</div>
+
 <div id="mobile-container" class="container-fluid">
     <div class="blur-overlay" id="blurOverlay"></div>
-    <h1 class="detail-title">@Model.Name <i class="fa-solid fa-star active"> @Model.Rating / 5</i></h1>
     <div class="btn-group" style="display: flex;">
         <button id="go-back" type="button" class="btn rounded-dark-button my-btn" onclick="goBack()" style="border: 2px solid white;">Wstecz</button>
-        <button id="create-rating-button" type="button" class="btn rounded-dark-button my-btn" style="border: 2px solid white;">Oceń</button>
+        <button type="button" class="btn create-rating-button rounded-dark-button my-btn" style="border: 2px solid white;">Oceń</button>
     </div>
     <img src="data:image;base64,@Convert.ToBase64String(Model.ImageUrl)" class="card-img-top img-fluid">
     <div style="text-align: justify;">
@@ -89,6 +79,10 @@
     </div>
 </div>
 
+<div class="rating-partial-view text-center hidden">
+    @await Html.PartialAsync("_CreateRating", new Kuchenne_rewolucje.Models.Rating { ArticleId = Model.Id, UserId = Model.UserId, Value = rate })
+</div>
+
 @section Scripts {
     <script src="~/js/article.js"></script>
     <script src="~/js/star-rating.js"></script>
@@ -102,7 +96,7 @@
                     $('#rating-value').text(currentRating);
                     $('#rating-input').val(currentRating);
                 }
-            });
+            });         
         });
     </script>
 }

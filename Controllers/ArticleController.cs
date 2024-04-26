@@ -12,7 +12,7 @@ using System.IO;
 namespace Kuchenne_rewolucje.Controllers
 {
     [Authorize]
-    public class ArticleController(ICategoryRepository categoryRepository, IConfiguration config, IMapper mapper, IArticleRepository articleRepository,
+    public class ArticleController(ICategoryRepository categoryRepository, IConfiguration config, IMapper mapper, IWebHostEnvironment webHostEnvironment, IArticleRepository articleRepository,
         IUserRepository userRepository, IFavouriteRepository favouritesRepository, IRatingRepository ratingRepository) : Controller
     {
         private readonly ICategoryRepository _categoryRepository = categoryRepository;
@@ -22,6 +22,7 @@ namespace Kuchenne_rewolucje.Controllers
         private readonly IRatingRepository _ratingRepository = ratingRepository;
         private readonly IConfiguration _config = config;
         private readonly IMapper _mapper = mapper;
+        private readonly IWebHostEnvironment _env = webHostEnvironment;
 
         [HttpGet]
         public async Task<IActionResult> Index(int? categoryid)
@@ -55,7 +56,7 @@ namespace Kuchenne_rewolucje.Controllers
                 var userId = int.Parse(HttpContext.Request.Cookies["UserId"]);
                 var article = await _articleRepository.GetAsync(id);
                 if (article.Ratings.Any())
-                    ViewBag.Rate = await _ratingRepository.GetUserRate(id, article.Id);
+                    ViewBag.Rate = await _ratingRepository.GetUserRate(userId, article.Id);
                 else
                     ViewBag.Rate = 0;
                 return View("Details", _mapper.Map<ArticleDto>(article));
@@ -103,7 +104,7 @@ namespace Kuchenne_rewolucje.Controllers
         {
             try
             {
-                if(dto.ImageFile == null)
+                if (dto.ImageFile == null)
                     return View("CreateArticle", dto);
 
                 AddImage(dto.ImageFile, out byte[] imageUrl);
@@ -201,7 +202,7 @@ namespace Kuchenne_rewolucje.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddFavouriteArticle([FromQuery]int id)
+        public async Task<IActionResult> AddFavouriteArticle([FromQuery] int id)
         {
             try
             {
@@ -248,6 +249,24 @@ namespace Kuchenne_rewolucje.Controllers
                 TempData["ErrorMessage"] = $"Błąd dodawania oceny: {ex.Message}";
                 return RedirectToAction("SingleArticle", dto.ArticleId);
             }
+        }
+
+        [HttpPost]
+        public ActionResult UploadImages(List<IFormFile> files)
+        {
+            List<byte[]> imageUrls = new List<byte[]>();
+
+            foreach (IFormFile file in files)
+            {
+                byte[] imageUrl;
+                using MemoryStream memoryStream = new();
+                file.CopyTo(memoryStream);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                imageUrl = memoryStream.ToArray();
+                imageUrls.Add(imageUrl);
+            }
+
+            return Json(new { imageUrls });
         }
     }
 }

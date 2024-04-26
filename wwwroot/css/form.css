@@ -118,7 +118,7 @@
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
         z-index: 9999;
         margin-top: 10px;
-        position: fixed;
+        position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -150,7 +150,6 @@
     .rounded-dark-button {
         background-color: #333;
         color: #fff;
-        border: none;
         padding: 10px 20px;
         border-radius: 50px;
         font-size: 16px;
