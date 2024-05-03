@@ -2,11 +2,6 @@
 
 This is a website for sharing recipes with friends. 
 
-## Introduction
-
-The GreenGrass web application was built using the ASP.NET framework. The project aims to allow users to manage plants and receive notifications regarding watering and fertilizing plants.
-Each user has access to their plant database. They specify basic conditions for growing each plant, and the application helps them keep all data organized while reminding them through notifications of specific actions that need to be taken.
-
 ## How to run?
 1. Download the project from GitHub
 2. Make sure you have a database named KuchenneRewolucje
