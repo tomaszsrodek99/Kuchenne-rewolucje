@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ImageProcessor;
+using SkiaSharp;
 using ImageProcessor.Imaging;
 using Kuchenne_rewolucje.Dtos;
 using Kuchenne_rewolucje.Interfaces;
@@ -123,22 +124,25 @@ namespace Kuchenne_rewolucje.Controllers
 
         private static void AddImage(IFormFile imageFile, out byte[] ImageUrl)
         {
-            using MemoryStream originalStream = new();
-            using MemoryStream resizedStream = new();
-            imageFile.CopyTo(originalStream);
-            originalStream.Seek(0, SeekOrigin.Begin);
-            resizedStream.Seek(0, SeekOrigin.Begin);
-            using (ImageFactory imageFactory = new(preserveExifData: true))
+            using var stream = imageFile.OpenReadStream();
+            using var bitmap = SKBitmap.Decode(stream);
+            int newWidth, newHeight;
+
+            if (bitmap.Width > bitmap.Height)
             {
-                imageFactory.Load(originalStream);
-
-                imageFactory.Resize(new ResizeLayer(new Size(460, 300), ResizeMode.Max));
-
-
-                imageFactory.Save(resizedStream);
+                newWidth = Math.Min(bitmap.Width, 305);
+                newHeight = (int)Math.Round((double)newWidth / bitmap.Width * bitmap.Height);
+            }
+            else
+            {
+                newHeight = Math.Min(bitmap.Height, 245);
+                newWidth = (int)Math.Round((double)newHeight / bitmap.Height * bitmap.Width);
             }
 
-            ImageUrl = resizedStream.ToArray();
+            using var resizedBitmap = bitmap.Resize(new SKImageInfo(newWidth, newHeight), SKBitmapResizeMethod.Lanczos3);
+            using var memoryStream = new MemoryStream();
+            SKImage.FromBitmap(resizedBitmap).Encode(SKEncodedImageFormat.Png, 100).SaveTo(memoryStream);
+            ImageUrl = memoryStream.ToArray();
         }
 
         [HttpGet]

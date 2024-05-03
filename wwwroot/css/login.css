@@ -8,9 +8,9 @@ body {
     font-family: "Roboto", sans-serif;
     font-size: 14px;
     line-height: 1.6em;
-    background: url(/img/tło2.png);
+    background: url(/img/login-background.jpg);
+    background-size: 100% 100%;
     background-repeat: no-repeat;
-    background-size: cover;
 }
 
 .center-container {
@@ -21,15 +21,35 @@ body {
     background: linear-gradient(135deg, rgba(36, 46, 77, 0.9), rgba(137, 126, 121, 0.9));
     font-family: 'Roboto', helvetica, arial, sans-serif;
     font-size: 1.5em;
-    padding: 20px;
+    margin: 10px;
+    padding: 10px;
 }
 
 #list-profiles {
     display: flex;
     flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    max-width: 80%;
+    overflow-x: auto;
 }
 
 @media (max-width: 768px) {
+    .center-container {
+        top: 45%;
+    }
+
+    body {
+        background: url(/img/login-mobile-background.jpg);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+
+    #list-profiles {
+        max-height: 660px;
+        overflow-y: auto;
+    }
+
     .list-profiles {
         display: flex;
         flex-direction: column;
@@ -47,7 +67,7 @@ body {
     }
 
     .login-form {
-        padding: 10px!important;
+        padding: 10px !important;
         max-width: 250px;
         font-size: 14px;
     }
@@ -107,9 +127,9 @@ body {
         opacity: 0.3;
     }
 
-    #login-container {
-        padding: 0;
-    }
+#login-container {
+    padding: 0;
+}
 
 .login-form {
     padding: 2em;
@@ -155,11 +175,11 @@ body {
     background: linear-gradient(to right, #35c3c1, #00d6b7);
 }
 
-    .btn:focus {
-        outline: none;
-        transition: transform 0.15s ease;
-        transform: scale(1.1);
-    }
+.btn:focus {
+    outline: none;
+    transition: transform 0.15s ease;
+    transform: scale(1.1);
+}
 
 ::placeholder {
     color: #8f8f8f;
