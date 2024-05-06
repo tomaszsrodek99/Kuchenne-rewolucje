@@ -27,7 +27,7 @@ namespace Kuchenne_rewolucje.Dtos
         [Display(Name = "Przygotowanie")]
         public string Content { get; set; }
         [Column(TypeName = "varbinary(max)")]
-        public byte[]? ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
         [Display(Name = "Zdjęcie")]
         public IFormFile? ImageFile { get; set; }
         public List<CommentDto>? Comments { get; set; }

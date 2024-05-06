@@ -14,7 +14,7 @@ namespace Kuchenne_rewolucje.Models
         public int CategoryId { get; set; }
         public string Ingredients { get; set; }
         public string Content { get; set; }
-        public byte[]? ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
         public List<Comment>? Comments { get; set; }
         public List<FavouritesArticle>? Favourites { get; set; }
         public List<Rating>? Ratings { get; set; }

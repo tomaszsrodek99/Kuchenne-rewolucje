@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using ImageProcessor;
 using SkiaSharp;
-using ImageProcessor.Imaging;
 using Kuchenne_rewolucje.Dtos;
 using Kuchenne_rewolucje.Interfaces;
 using Kuchenne_rewolucje.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Drawing;
+using Microsoft.EntityFrameworkCore;
+using Kuchenne_rewolucje.Context;
+using Microsoft.Extensions.Options;
 using System.IO;
 
 namespace Kuchenne_rewolucje.Controllers
@@ -108,8 +108,7 @@ namespace Kuchenne_rewolucje.Controllers
                 if (dto.ImageFile == null)
                     return View("CreateArticle", dto);
 
-                AddImage(dto.ImageFile, out byte[] imageUrl);
-                dto.ImageUrl = imageUrl;
+                dto.ImageUrl = AddImage(dto.ImageFile, null);
                 dto.CreatedAt = DateTime.Now;
                 await _articleRepository.AddAsync(_mapper.Map<Article>(dto));
                 TempData["SuccessMessage"] = $"Poprawnie dodano przepis.";
@@ -118,31 +117,33 @@ namespace Kuchenne_rewolucje.Controllers
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = $"Błąd dodawania przepisu. {ex.Message}.";
-                return View("CreateArticle", dto);
+                return RedirectToAction("CreateArticle", dto.UserId);
             }
         }
 
-        private static void AddImage(IFormFile imageFile, out byte[] ImageUrl)
+        private static string AddImage(IFormFile imageFile, string? latestImage)
         {
-            using var stream = imageFile.OpenReadStream();
-            using var bitmap = SKBitmap.Decode(stream);
-            int newWidth, newHeight;
-
-            if (bitmap.Width > bitmap.Height)
+            if (!string.IsNullOrEmpty(latestImage))
             {
-                newWidth = Math.Min(bitmap.Width, 305);
-                newHeight = (int)Math.Round((double)newWidth / bitmap.Width * bitmap.Height);
-            }
-            else
-            {
-                newHeight = Math.Min(bitmap.Height, 245);
-                newWidth = (int)Math.Round((double)newHeight / bitmap.Height * bitmap.Width);
+                string imagePath = Path.Combine("wwwroot", "img", latestImage);
+                FileInfo file = new(imagePath);
+                if (file.Exists)
+                {
+                    file.Delete();
+                }
             }
 
-            using var resizedBitmap = bitmap.Resize(new SKImageInfo(newWidth, newHeight), SKBitmapResizeMethod.Lanczos3);
-            using var memoryStream = new MemoryStream();
-            SKImage.FromBitmap(resizedBitmap).Encode(SKEncodedImageFormat.Png, 100).SaveTo(memoryStream);
-            ImageUrl = memoryStream.ToArray();
+            string fileName = $"{DateTime.Now:yyyyMMddHHmmss}-{Path.GetFileName(imageFile.FileName)}";
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", fileName);
+
+            using (var stream = imageFile.OpenReadStream())
+            {
+                using var fileStream = new FileStream(filePath, FileMode.Create);
+                stream.Seek(0, SeekOrigin.Begin);
+                stream.CopyTo(fileStream);
+            }
+
+            return fileName;
         }
 
         [HttpGet]
@@ -166,13 +167,13 @@ namespace Kuchenne_rewolucje.Controllers
         {
             try
             {
+
                 var article = await _articleRepository.GetAsync(dto.Id);
                 dto.CreatedAt = article.CreatedAt;
 
                 if (dto.ImageFile != null)
                 {
-                    AddImage(dto.ImageFile, out byte[] imageUrl);
-                    dto.ImageUrl = imageUrl;
+                    dto.ImageUrl = AddImage(dto.ImageFile, article.ImageUrl);
                 }
                 else
                 {
@@ -194,6 +195,13 @@ namespace Kuchenne_rewolucje.Controllers
         {
             try
             {
+                var article = await _articleRepository.GetAsync(id);
+
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", article.ImageUrl);
+                FileInfo file = new(path);
+                file.Delete();
+
+                _articleRepository.Detach(article);
                 await _articleRepository.DeleteAsync(id);
                 TempData["SuccessMessage"] = $"Poprawnie usunięto przepis.";
                 return RedirectToAction("MyRecipes");
@@ -255,22 +263,6 @@ namespace Kuchenne_rewolucje.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult UploadImages(List<IFormFile> files)
-        {
-            List<byte[]> imageUrls = new List<byte[]>();
 
-            foreach (IFormFile file in files)
-            {
-                byte[] imageUrl;
-                using MemoryStream memoryStream = new();
-                file.CopyTo(memoryStream);
-                memoryStream.Seek(0, SeekOrigin.Begin);
-                imageUrl = memoryStream.ToArray();
-                imageUrls.Add(imageUrl);
-            }
-
-            return Json(new { imageUrls });
-        }
     }
 }

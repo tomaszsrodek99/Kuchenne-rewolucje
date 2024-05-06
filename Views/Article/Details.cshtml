@@ -19,13 +19,13 @@
                 <button id="go-back" type="button" class="my-btn rounded-dark-button btn-primary float-start" onclick="goBack()" style="float: left; margin-right: 5px;">Wstecz</button>
                 <button type="button" class="create-rating-button my-btn rounded-dark-button btn-primary float-start" style="float: left;">Oceń</button>
             </div>
-            <img src="data:image;base64,@Convert.ToBase64String(Model.ImageUrl)" class="img-fluid detail-image">
+            <img src="/img/@Model.ImageUrl" class="img-fluid detail-image">
             <div class="igredients-container">
                 @Html.Raw(Model.Ingredients)
             </div>
         </div>
         <div class="col-lg-5 col-md-6 d-flex flex-column">
-            <div style="text-align: left;">
+            <div class="igredients-container">
                 @Html.Raw(Model.Content)
             </div>
             <h3 class="text-center">Komentarze</h3>
@@ -55,7 +55,7 @@
         <button id="go-back" type="button" class="btn rounded-dark-button my-btn" onclick="goBack()" style="border: 2px solid white;">Wstecz</button>
         <button type="button" class="btn create-rating-button rounded-dark-button my-btn" style="border: 2px solid white;">Oceń</button>
     </div>
-    <img src="data:image;base64,@Convert.ToBase64String(Model.ImageUrl)" class="card-img-top img-fluid">
+    <img src="/img/Model.ImageUrl" class="card-img-top img-fluid">
     <div style="text-align: justify;">
         @Html.Raw(Model.Ingredients)
     </div>

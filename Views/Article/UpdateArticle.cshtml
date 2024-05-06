@@ -40,21 +40,21 @@
                     <button type="button" id="add-category-button" class="btn btn-info" style="background-color: #17a2b8;">Dodaj nową kategorię</button>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Ingredients" class="control-label"></label>
-                    <textarea asp-for="Ingredients" class="editor"></textarea>
-                    <span asp-validation-for="Ingredients" class="text-danger"></span>
+                    <label asp-for="Content" class="control-label"></label>
+                    <textarea asp-for="Content" class="content-editor"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Content" class="control-label"></label>
-                    <textarea asp-for="Content" class="editor"></textarea>
-                    <span asp-validation-for="Content" class="text-danger"></span>
+                    <label asp-for="Ingredients" class="control-label"></label>
+                    <textarea asp-for="Ingredients" class="ingredients-editor"></textarea>
+                    <span asp-validation-for="Ingredients" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="ImageFile" class="control-label"></label>
                     <input asp-for="ImageFile" name="ImageFile" type="file" class="form-control">
                     <span asp-validation-for="ImageFile" class="text-danger"></span>
                 </div>
-                <img src="data:image;base64,@Convert.ToBase64String(@Model.ImageUrl)" class="user-image img-fluid" style="margin-bottom: 10px;" />
+                <img src="/img/@Model.ImageUrl" class="user-image img-fluid" style="margin-bottom: 10px;" />
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Zapisz</button>
                 </div>
@@ -71,7 +71,6 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script src="~/js/ckeditor.js"></script>
-    <script src="~/js/ckfinder.js"></script>
     <script src="~/js/script.js"></script>
     <script src="~/js/article.js"></script>
 }
