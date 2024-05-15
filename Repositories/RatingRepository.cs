@@ -16,14 +16,16 @@ namespace Kuchenne_rewolucje.Repositories
             return await _context.Ratings.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<double> GetUserRate(int userId, int articleId)
+        public async Task<Rating> GetUserRate(int userId, int articleId)
         {
-            var value = await _context.Ratings.Where(x =>x.UserId == userId && x.ArticleId == articleId).Select(x=>x.Value).FirstOrDefaultAsync();
-
-            if (value == null)
-                return 0;
-
+            var value = await _context.Ratings.Where(x =>x.UserId == userId && x.ArticleId == articleId).FirstOrDefaultAsync();
             return value;
+        }
+
+        public async Task<Rating> GetRating(int userId, int articleId)
+        {
+            var currentRating = await _context.Ratings.Where(x => x.UserId == userId && x.ArticleId == articleId).FirstOrDefaultAsync();
+            return currentRating;
         }
     }
 }

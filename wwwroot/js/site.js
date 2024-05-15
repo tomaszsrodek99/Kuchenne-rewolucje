@@ -40,6 +40,24 @@ function searchByName() {
     }
 }
 
+function mobileSearchByName() {
+    var input, filter, articles, article, title, i, txtValue;
+    input = document.getElementById("mobileSearchInput");
+    filter = input.value.toUpperCase();
+    articles = document.getElementsByClassName("box-shadow");
+
+    for (i = 0; i < articles.length; i++) {
+        article = articles[i];
+        title = article.getElementsByTagName("a")[0];
+        txtValue = title.textContent || title.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            article.style.display = "";
+        } else {
+            article.style.display = "none";
+        }
+    }
+}
+
 function filterByCategory(categoryId) {
     var articles = document.querySelectorAll('.box-shadow');
     articles.forEach(function (article) {

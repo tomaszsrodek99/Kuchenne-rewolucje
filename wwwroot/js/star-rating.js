@@ -7,7 +7,7 @@
     var noop = function () { };
     var defaults = {
         totalStars: 5,
-        useFullStars: false,
+        useFullStars: true,
         starShape: 'straight',
         emptyColor: 'lightgray',
         hoverColor: 'orange',
@@ -83,7 +83,7 @@
             var currentRating = this._state.rating;
             //console.log("Index: " + index + '=' + "Ocena: " + currentRating);
             if (index < currentRating) {
-                for (var i = index; i < currentRating - 1; i += 0.5) {
+                for (var i = index; i < currentRating - 1; i += 1) {
                     console.log("index: do odkolorowania " + i);
                     this.paintStars(i, 'active');
                 }
@@ -112,6 +112,7 @@
             this.paintStars(index, 'rated');
             this._state.rating = index + 1;
             this._state.rated = true;
+            $('#rating-input').val(rating);
         },
 
         restoreState: function (e) {
@@ -176,7 +177,7 @@
                 }
 
                 // has another half rating, add half star
-                leftClass = (index - endIndex === 0.5) ? stateClass : leftClass;
+                leftClass = (index - endIndex === 0) ? stateClass : leftClass;
 
                 $polygonLeft.attr('class', 'svg-' + leftClass + '-' + this._uid);
                 $polygonRight.attr('class', 'svg-' + rightClass + '-' + this._uid);

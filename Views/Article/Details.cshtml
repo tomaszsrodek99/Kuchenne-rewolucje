@@ -43,7 +43,7 @@
                         }
                     </div>
                 }
-                @await Html.PartialAsync("_CreateComment", new Kuchenne_rewolucje.Dtos.CommentDto { ArticleId = Model.Id, UserId = Model.UserId, Username = username })
+                @await Html.PartialAsync("_CreateComment", new Kuchenne_rewolucje.Dtos.CommentDto { ArticleId = Model.Id, UserId = int.Parse(id), Username = username })
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@
         <button id="go-back" type="button" class="btn rounded-dark-button my-btn" onclick="goBack()" style="border: 2px solid white;">Wstecz</button>
         <button type="button" class="btn create-rating-button rounded-dark-button my-btn" style="border: 2px solid white;">Oceń</button>
     </div>
-    <img src="/img/Model.ImageUrl" class="card-img-top img-fluid">
+    <img src="/img/@Model.ImageUrl" class="card-img-top img-fluid">
     <div style="text-align: justify;">
         @Html.Raw(Model.Ingredients)
     </div>
@@ -77,19 +77,23 @@
                 }
             </div>
         }
-        @await Html.PartialAsync("_CreateComment", new Kuchenne_rewolucje.Dtos.CommentDto { ArticleId = Model.Id, UserId = Model.UserId, Username = username })
+        @await Html.PartialAsync("_CreateComment", new Kuchenne_rewolucje.Dtos.CommentDto { ArticleId = Model.Id, UserId = int.Parse(id), Username = username })
     </div>
 </div>
 
 <div class="rating-partial-view text-center hidden">
-    @await Html.PartialAsync("_CreateRating", new Kuchenne_rewolucje.Models.Rating { ArticleId = Model.Id, UserId = Model.UserId, Value = rate })
+    @await Html.PartialAsync("_CreateRating", new Kuchenne_rewolucje.Models.Rating { ArticleId = Model.Id, UserId = int.Parse(id), Value = rate })
 </div>
 
 @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script src="~/js/article.js"></script>
     <script src="~/js/star-rating.js"></script>
     <script>
         var userRate = @ViewBag.Rate;
+        console.log(userRate);
         $(document).ready(function () {
             var rate = userRate;
             $('#star-rating').starRating({

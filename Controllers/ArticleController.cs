@@ -56,10 +56,14 @@ namespace Kuchenne_rewolucje.Controllers
             {
                 var userId = int.Parse(HttpContext.Request.Cookies["UserId"]);
                 var article = await _articleRepository.GetAsync(id);
-                if (article.Ratings.Any())
-                    ViewBag.Rate = await _ratingRepository.GetUserRate(userId, article.Id);
-                else
+                var currentRating = await _ratingRepository.GetUserRate(userId, article.Id);
+                if(currentRating != null)
+                {
+                    ViewBag.Rate = currentRating.Value;
+                } else
+                {
                     ViewBag.Rate = 0;
+                }
                 return View("Details", _mapper.Map<ArticleDto>(article));
             }
             catch (Exception ex)
@@ -182,7 +186,7 @@ namespace Kuchenne_rewolucje.Controllers
                 _articleRepository.Detach(article);
                 await _articleRepository.UpdateAsync(_mapper.Map<Article>(dto));
                 TempData["SuccessMessage"] = "Poprawnie edytowano przepis.";
-                return RedirectToAction("MyRecipes");
+                return RedirectToAction("SingleArticle", new { id = dto.Id });
             }
             catch (Exception ex)
             {
@@ -248,18 +252,19 @@ namespace Kuchenne_rewolucje.Controllers
         {
             try
             {
-                if (dto.Value == 0 && dto.Id != 0)
+                var currentRating = await _ratingRepository.GetRating(dto.UserId, dto.ArticleId);
+                if (currentRating != null)
                 {
-                    await _ratingRepository.DeleteAsync(dto.Id);
+                    await _ratingRepository.DeleteAsync(currentRating.Id);
                 }
                 await _ratingRepository.UpdateAsync(dto);
                 TempData["SuccessMessage"] = "Poprawnie dodano ocenę.";
-                return RedirectToAction("SingleArticle", dto.ArticleId);
+                return RedirectToAction("SingleArticle", new { id = dto.ArticleId });
             }
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = $"Błąd dodawania oceny: {ex.Message}";
-                return RedirectToAction("SingleArticle", dto.ArticleId);
+                return RedirectToAction("SingleArticle", new { id = dto.ArticleId });
             }
         }
 

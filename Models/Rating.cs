@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Kuchenne_rewolucje.Models
@@ -7,7 +8,7 @@ namespace Kuchenne_rewolucje.Models
     {
         [Key]
         public int Id { get; set; }
-        [Range(0, 5, ErrorMessage = "Ocena musi zawierać się między 0 a 5")]
+        [DataType(DataType.Currency)]
         public double Value { get; set; }
         public int UserId { get; set; }
         [JsonIgnore]

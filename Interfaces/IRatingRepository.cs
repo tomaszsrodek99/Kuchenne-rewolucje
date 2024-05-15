@@ -4,6 +4,7 @@ namespace Kuchenne_rewolucje.Interfaces
 {
     public interface IRatingRepository : IGenericRepository<Rating>
     {
-        Task<double> GetUserRate(int userId, int articleId);
+        Task<Rating> GetUserRate(int userId, int articleId);
+        Task<Rating> GetRating(int userId, int articleId);
     }
 }
