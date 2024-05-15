@@ -36,11 +36,7 @@ namespace Kuchenne_rewolucje.Helpers
             {
                 totalRating += rating.Value;
             }
-            double averageRating = totalRating / ratings.Count;
-
-            double roundedRating = Math.Round(averageRating * 2) / 2;
-
-            return roundedRating;
+            return totalRating / ratings.Count;
         }
     }
 }

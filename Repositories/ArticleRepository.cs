@@ -17,7 +17,6 @@ namespace Kuchenne_rewolucje.Repositories
             var articles = await _context.Articles
                 .Include(x => x.User)
                 .Include(f => f.Favourites)
-                .Include(r => r.Ratings)
                 .ToListAsync();
 
 
