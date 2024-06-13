@@ -26,6 +26,11 @@ This is a website for sharing recipes with friends.
 - LINQ
 - AutoMapper
 - SkiaSharp
+## Review
+![image](https://github.com/tomaszsrodek99/Kuchenne-rewolucje/assets/98595791/d6cf273c-6d52-452a-b97b-b74f3bd14ab8)
+![image](https://github.com/tomaszsrodek99/Kuchenne-rewolucje/assets/98595791/b4e632ff-585e-4ee3-926a-533fca4a4c17)
+![image](https://github.com/tomaszsrodek99/Kuchenne-rewolucje/assets/98595791/3a660792-2d90-4227-bb23-2f8db9a61df6)
+![image](https://github.com/tomaszsrodek99/Kuchenne-rewolucje/assets/98595791/4fe50ac6-1761-48d1-bca9-db1e7c74f2f6)
 
 
 
